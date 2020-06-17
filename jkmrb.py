@@ -3,8 +3,8 @@ from selenium import webdriver
 import datetime
 import traceback
 
-netid = "" # 在这里填入你的netid
-pwd = "" # 在这里填入你的密码
+netid = ""  # 在这里填入你的netid
+pwd = ""  # 在这里填入你的密码
 
 
 def reportHealth(netid, pwd):
@@ -52,7 +52,7 @@ def reportHealth(netid, pwd):
         print("跳转至填写页面...")
         driver.get(
             'http://jkrb.xjtu.edu.cn/EIP/cooperative/openCooperative.htm?flowId=4af591a272b0df2a0172b31acbce66f1')
-        time.sleep(2)
+        time.sleep(3)
         windows = driver.window_handles
         driver.switch_to.window(windows[-1])
         print("开始自动填写...")
@@ -62,9 +62,18 @@ def reportHealth(netid, pwd):
         driver.find_element_by_xpath(
             '/html/body/div/div/p[4]/div/table/tbody/tr/td/div[1]/div[3]/input').click()  # 选中“绿码”
 
+        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').click()  # 点击体温栏
+        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').clear()
+        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').send_keys(
+            '36.8')  # 填报体温
+
+        driver.find_element_by_xpath(
+            '/html/body/div/div/table/tbody/tr[21]/td[2]/div/table/tbody/tr/td/div[1]/div[2]/input').click()  # 6月17日新版 点击近14日内本人或家属去过中高风险地区？
+        driver.find_element_by_xpath(
+            '/html/body/div/div/table/tbody/tr[23]/td[2]/div/table/tbody/tr/td/div[1]/div[2]/input').click()  # 6月17日新版 点击近14日内本人或家属是否同中高风险地区地区返回人员接触过？
+
         driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').click()  # 点击时段
         driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').clear()
-
         if datetime.datetime.now().strftime('%p') == "AM":
             print("当前时段为上午")
             driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').send_keys(
@@ -74,10 +83,6 @@ def reportHealth(netid, pwd):
             driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').send_keys(
                 '下午')  # 填报时段
 
-        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').click()  # 点击体温栏
-        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').clear()
-        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').send_keys(
-            '36.8')  # 填报体温
         driver.switch_to.default_content()
         driver.find_element_by_id('sendBtn').click()
     except Exception as e:
