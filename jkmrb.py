@@ -62,16 +62,6 @@ def reportHealth(netid, pwd):
         driver.find_element_by_xpath(
             '/html/body/div/div/p[4]/div/table/tbody/tr/td/div[1]/div[3]/input').click()  # 选中“绿码”
 
-        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').click()  # 点击体温栏
-        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').clear()
-        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').send_keys(
-            '36.8')  # 填报体温
-
-        driver.find_element_by_xpath(
-            '/html/body/div/div/table/tbody/tr[21]/td[2]/div/table/tbody/tr/td/div[1]/div[2]/input').click()  # 6月17日新版 点击近14日内本人或家属去过中高风险地区？
-        driver.find_element_by_xpath(
-            '/html/body/div/div/table/tbody/tr[23]/td[2]/div/table/tbody/tr/td/div[1]/div[2]/input').click()  # 6月17日新版 点击近14日内本人或家属是否同中高风险地区地区返回人员接触过？
-
         driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').click()  # 点击时段
         driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').clear()
         if datetime.datetime.now().strftime('%p') == "AM":
@@ -82,6 +72,16 @@ def reportHealth(netid, pwd):
             print("当前时段为下午")
             driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[11]/td[2]/span/span/input').send_keys(
                 '下午')  # 填报时段
+
+        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').click()  # 点击体温栏
+        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').clear()
+        driver.find_element_by_xpath('/html/body/div/div/table/tbody/tr[14]/td[2]/span/span/input').send_keys(
+            '36.8')  # 填报体温
+
+        driver.find_element_by_xpath(
+            '/html/body/div/div/table/tbody/tr[21]/td[2]/div/table/tbody/tr/td/div[1]/div[2]/input').click()  # 6月17日新版 点击近14日内本人或家属去过中高风险地区？
+        driver.find_element_by_xpath(
+            '/html/body/div/div/table/tbody/tr[23]/td[2]/div/table/tbody/tr/td/div[1]/div[2]/input').click()  # 6月17日新版 点击近14日内本人或家属是否同中高风险地区地区返回人员接触过？
 
         driver.switch_to.default_content()
         driver.find_element_by_id('sendBtn').click()
